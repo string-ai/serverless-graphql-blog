@@ -1,7 +1,0 @@
-{
-  "name": "serverless-graphql-blog",
-  "custom": {},
-  "plugins": [
-    "serverless-optimizer-plugin"
-  ]
-}
