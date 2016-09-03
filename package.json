@@ -1,0 +1,17 @@
+{
+  "name": "serverless-graphql-blog",
+  "version": "0.0.1",
+  "description": "A Serverless GraphQL blog.",
+  "author": "me",
+  "license": "MIT",
+  "private": false,
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/serverless/serverless-graphql-blog"
+  },
+  "dependencies": {
+    "babelify": "^7.2.0",
+    "babel-preset-es2015": "^6.3.13",
+    "serverless-optimizer-plugin": "^2.5.1"
+  }
+}
