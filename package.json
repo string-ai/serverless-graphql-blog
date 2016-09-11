@@ -1,5 +1,5 @@
 {
-  "name": "string-ai-serverless-graphql-blog",
+  "name": "graphql-blog",
   "version": "1.0.0",
   "description": "graphql blog",
   "main": "./src/blog/index.js",

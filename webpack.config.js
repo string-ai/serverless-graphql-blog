@@ -6,8 +6,7 @@ module.exports = {
     loaders: [{
       test: /\.js$/,
       loaders: ['babel'],
-      include: __dirname,
-      exclude: /\aws-sdk/
+      include: __dirname
     }]
   }
 };
