@@ -30,7 +30,7 @@ custom:
 
 functions:
   graphql:
-    handler: "handler.graphql"
+    handler: handler.graphql
     include:
       - blog/
     events:
