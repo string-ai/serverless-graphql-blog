@@ -11,29 +11,26 @@
 #
 # Happy Coding!
 
-service: ${stage}-${project}
+service: ${self:custom.stage}-${self:custom.project}
 plugins:
   - serverless-webpack
 provider:
   name: aws
   runtime: nodejs4.3
+  defaults:
+    stage: "dev"
+    region: "us-east-1"
+    memory: 512
+    timeout: 6
 
-# you can overwrite defaults here
-#defaults:
-#  stage: dev
-#  region: us-east-1
-
-# you can add packaging information here
-#package:
-#  include:
-#    - include-me.js
-#  exclude:
-#    - exclude-me.js
-#  artifact: my-service-code.zip
+custom:
+  stage: dev
+  project: string-ai-serverless-graphql-blog
+  region: us-east-1
 
 functions:
-  sadiavas:
-    handler: handler.graphql
+  graphql:
+    handler: "handler.graphql"
     include:
       - blog/
     events:
@@ -41,21 +38,15 @@ functions:
           path: "blog/graphql"
           method: "POST"
 
-defaults:
-  stage: "dev"
-  region: "us-east-1"
-  memory: 512
-  timeout: 6
-
 resources:
   Resources:
     ProjectBucket:
       Type: AWS::S3::Bucket
       Properties:
         # You can also set properties for the resource, based on the CloudFormation properties
-        BucketName: ${stage}-${project}
+        BucketName: ${self:custom.stage}-${self:custom.project}
         # Or you could reference an environment variable
-        # BucketName: ${env.BUCKET_NAME}
+        # BucketName: ${self:custom.BUCKET_NAME}
     IamRoleLambda:
       Type: "AWS::IAM::Role"
       Properties:
@@ -73,7 +64,7 @@ resources:
     IamPolicyLambda:
       Type: "AWS::IAM::Policy"
       Properties:
-        PolicyName: "${stage}-${project}"
+        PolicyName: "${self:custom.stage}-${self:custom.project}"
         PolicyDocument:
           Version: "2012-10-17"
           Statement:
@@ -83,22 +74,22 @@ resources:
                 - "logs:CreateLogGroup"
                 - "logs:CreateLogStream"
                 - "logs:PutLogEvents"
-              Resource: "arn:aws:logs:${region}:*:*"
+              Resource: "arn:aws:logs:${self:custom.region}:*:*"
             -
               Effect: "Allow"
               Action:
                 - "*"
-              Resource: "arn:aws:dynamodb:${region}:*:table/${project}-posts-${stage}"
+              Resource: "arn:aws:dynamodb:${self:custom.region}:*:table/${self:custom.project}-posts-${self:custom.stage}"
             -
               Effect: "Allow"
               Action:
                 - "*"
-              Resource: "arn:aws:dynamodb:${region}:*:table/${project}-authors-${stage}"
+              Resource: "arn:aws:dynamodb:${self:custom.region}:*:table/${self:custom.project}-authors-${self:custom.stage}"
             -
               Effect: "Allow"
               Action:
                 - "*"
-              Resource: "arn:aws:dynamodb:${region}:*:table/${project}-comments-${stage}"
+              Resource: "arn:aws:dynamodb:${self:custom.region}:*:table/${self:custom.project}-comments-${self:custom.stage}"
         Roles:
           -
             Ref: "IamRoleLambda"
@@ -117,7 +108,7 @@ resources:
         ProvisionedThroughput:
           ReadCapacityUnits: 1
           WriteCapacityUnits: 1
-        TableName: "${project}-posts-${stage}"
+        TableName: "${self:custom.project}-posts-${self:custom.stage}"
     AuthorsDynamo:
       Type: "AWS::DynamoDB::Table"
       DeletionPolicy: "Retain"
@@ -133,7 +124,7 @@ resources:
         ProvisionedThroughput:
           ReadCapacityUnits: 1
           WriteCapacityUnits: 1
-        TableName: "${project}-authors-${stage}"
+        TableName: "${self:custom.project}-authors-${self:custom.stage}"
     CommentsDynamo:
       Type: "AWS::DynamoDB::Table"
       DeletionPolicy: "Retain"
@@ -149,7 +140,7 @@ resources:
         ProvisionedThroughput:
           ReadCapacityUnits: 1
           WriteCapacityUnits: 1
-        TableName: "${project}-comments-${stage}"
+        TableName: "${self:custom.project}-comments-${self:custom.stage}"
   Outputs:
     IamRoleArnLambda:
       Description: "ARN of the lambda IAM role"
@@ -157,24 +148,3 @@ resources:
         Fn::GetAtt:
           - "IamRoleLambda"
           - "Arn"
-
-#   you can add any of the following events
-#   events:
-#     - http:
-#         path: users/create
-#         method: get
-#     - s3: ${bucket}
-#     - schedule: rate(10 minutes)
-#     - sns: greeter-topic
-
-# you can add CloudFormation resource templates here
-#resources:
-#  Resources:
-#    NewResource:
-#      Type: AWS::S3::Bucket
-#      Properties:
-#        BucketName: my-new-bucket
-#  Outputs:
-#     NewOutput:
-#       Description: "Description for the output"
-#       Value: "Some output value"

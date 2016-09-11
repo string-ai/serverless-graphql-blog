@@ -14,7 +14,7 @@ var ServerlessHelpers = require('serverless-helpers-js').loadEnv();
 var lib = require('../lib');
 
 // Lambda Handler
-module.exports.graphql = function(event, context) {
+module.exports.handler = function(event, context) {
 
   lib.runGraphQL(event, function(error, response) {
     return context.done(error, response);

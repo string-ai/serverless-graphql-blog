@@ -7,7 +7,10 @@ module.exports = {
       test: /\.js$/,
       loaders: ['babel'],
       include: __dirname,
-      exclude: /\.serverless/
+      exclude: [
+          /\.serverless/,
+          /node_modules/
+      ]
     }]
   }
 };
