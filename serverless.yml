@@ -33,9 +33,10 @@ functions:
     handler: handler.graphql
     include:
       - blog/
+      - handler.js
     events:
       - http:
-          path: "blog/graphql"
+          path: "/blog/graphql"
           method: "POST"
 
 resources:
