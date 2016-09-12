@@ -1,0 +1,36 @@
+machine:
+  node:
+    # Not sure if latest version is supported so setting latest available
+    version: 6.1.0
+
+dependencies:
+  override:
+    # set region
+    - aws configure set default.region us-east-1
+    # connect to aws
+    - eval $(aws ecr get-login)
+
+    # build pre-reqs
+    - bin/setup.sh
+
+test:
+  override:
+    # put your test command(s) here
+    - node --version
+    - serverless --version 
+
+    # placeholder for mocha
+    #- mocha test --reporter mocha-junit-reporter:
+    #    environment:
+    #      MOCHA_FILE: $CIRCLE_TEST_REPORTS/junit/test-results.xml
+
+
+deployment:
+
+  development:
+    # only apply this deployment on the branch below
+    branch: master
+
+    commands:
+      # deploy artifacts
+      - bin/deploy.sh
