@@ -4,9 +4,13 @@ const dynamoConfig = {
   sessionToken:    process.env.AWS_SESSION_TOKEN,
   region:          process.env.AWS_REGION
 };
+
+console.log('DynamoConfig:' + JSON.stringify(dynamoConfig));
 const docClient = new AWS.DynamoDB.DocumentClient(dynamoConfig);
-const stage = process.env.SERVERLESS_STAGE;
-const projectName = process.env.SERVERLESS_PROJECT;
+const stage = process.env.SERVERLESS_STAGE || 'dev';
+const projectName = process.env.SERVERLESS_PROJECT || 'string-ai-serverless-graphql-blog';
+console.log('stage:' + stage);
+console.log('project:' + projectName);
 const postsTable = projectName + '-posts-' + stage;
 const authorsTable = projectName + '-authors-' + stage;
 const commentsTable = projectName + '-comments-' + stage;
@@ -19,7 +23,12 @@ export function createPost(post) {
     };
 
     docClient.put(params, function(err, data) {
-      if (err) return reject(err);
+      if (err) {
+        console.log('Error in creating a post:' + err);
+        return reject(err);
+      }
+      console.log('post:' + JSON.stringify(post));
+      console.log('data:' + data);
       return resolve(post);
     });
 

@@ -18,8 +18,8 @@ provider:
   name: aws
   runtime: nodejs4.3
   defaults:
-    stage: "dev"
-    region: "us-east-1"
+    stage: dev
+    region: us-east-1
     memory: 512
     timeout: 6
 
@@ -36,26 +36,26 @@ functions:
       - handler.js
     events:
       - http:
-          path: "/blog/graphql"
-          method: "POST"
+          path: graphql
+          method: post
 
 resources:
   Resources:
-    ProjectBucket:
-      Type: AWS::S3::Bucket
-      Properties:
+#    ProjectBucket:
+#      Type: AWS::S3::Bucket
+#      Properties:
         # You can also set properties for the resource, based on the CloudFormation properties
-        BucketName: ${self:custom.stage}-${self:custom.project}
+#        BucketName: ${self:custom.stage}-${self:custom.project}
         # Or you could reference an environment variable
         # BucketName: ${self:custom.BUCKET_NAME}
     IamRoleLambda:
-      Type: "AWS::IAM::Role"
+      Type: AWS::IAM::Role
       Properties:
         AssumeRolePolicyDocument:
           Version: "2012-10-17"
           Statement:
             -
-              Effect: "Allow"
+              Effect: Allow
               Principal:
                 Service:
                   - "lambda.amazonaws.com"
@@ -92,8 +92,7 @@ resources:
                 - "*"
               Resource: "arn:aws:dynamodb:${self:custom.region}:*:table/${self:custom.project}-comments-${self:custom.stage}"
         Roles:
-          -
-            Ref: "IamRoleLambda"
+          - Ref: "IamRoleLambda"
     CloudWatchRole:
       Type: "AWS::IAM::Role"
       Properties:
@@ -118,15 +117,13 @@ resources:
             - "Arn"
     PostsDynamo:
       Type: "AWS::DynamoDB::Table"
-      DeletionPolicy: "Retain"
+#      DeletionPolicy: "Retain"
       Properties:
         AttributeDefinitions:
-          -
-            AttributeName: "id"
+          - AttributeName: "id"
             AttributeType: "S"
         KeySchema:
-          -
-            AttributeName: "id"
+          - AttributeName: "id"
             KeyType: "HASH"
         ProvisionedThroughput:
           ReadCapacityUnits: 1
@@ -134,15 +131,13 @@ resources:
         TableName: "${self:custom.project}-posts-${self:custom.stage}"
     AuthorsDynamo:
       Type: "AWS::DynamoDB::Table"
-      DeletionPolicy: "Retain"
+#      DeletionPolicy: "Retain"
       Properties:
         AttributeDefinitions:
-          -
-            AttributeName: "id"
+          - AttributeName: "id"
             AttributeType: "S"
         KeySchema:
-          -
-            AttributeName: "id"
+          - AttributeName: "id"
             KeyType: "HASH"
         ProvisionedThroughput:
           ReadCapacityUnits: 1
@@ -150,15 +145,13 @@ resources:
         TableName: "${self:custom.project}-authors-${self:custom.stage}"
     CommentsDynamo:
       Type: "AWS::DynamoDB::Table"
-      DeletionPolicy: "Retain"
+#      DeletionPolicy: "Retain"
       Properties:
         AttributeDefinitions:
-          -
-            AttributeName: "id"
+          - AttributeName: "id"
             AttributeType: "S"
         KeySchema:
-          -
-            AttributeName: "id"
+          - AttributeName: "id"
             KeyType: "HASH"
         ProvisionedThroughput:
           ReadCapacityUnits: 1

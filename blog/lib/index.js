@@ -3,6 +3,7 @@ import Schema from './schema';
 
 export function runGraphQL(event, cb) {
 
+  console.log('Events:' + JSON.stringify(event));
   let query = event.query;
 
   // patch to allow queries from GraphiQL

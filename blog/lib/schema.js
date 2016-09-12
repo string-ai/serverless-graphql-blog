@@ -102,6 +102,8 @@ const Mutuation = new GraphQLObjectType({
         author: {type: new GraphQLNonNull(GraphQLString), description: "Id of the author"}
       },
       resolve: function(source, args) {
+        console.log('Source:' + source);
+        console.log('args', JSON.stringify(args));
         return createPost(args);
       }
     }
