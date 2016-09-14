@@ -11,7 +11,7 @@
 #
 # Happy Coding!
 
-service: ${self:custom.stage}-${self:custom.project}
+service: dev-parking-race
 plugins:
   - serverless-webpack
 provider:
@@ -20,7 +20,7 @@ provider:
   defaults:
     stage: dev
     region: us-east-1
-    memory: 512
+    memory: 128
     timeout: 6
 
 custom:
@@ -32,7 +32,7 @@ functions:
   graphql:
     handler: handler.graphql
     include:
-      - blog/
+      - lib/
       - handler.js
     events:
       - http:
@@ -48,119 +48,119 @@ resources:
 #        BucketName: ${self:custom.stage}-${self:custom.project}
         # Or you could reference an environment variable
         # BucketName: ${self:custom.BUCKET_NAME}
-    IamRoleLambda:
-      Type: AWS::IAM::Role
-      Properties:
-        AssumeRolePolicyDocument:
-          Version: "2012-10-17"
-          Statement:
-            -
-              Effect: Allow
-              Principal:
-                Service:
-                  - "lambda.amazonaws.com"
-              Action:
-                - "sts:AssumeRole"
-        Path: "/"
-    IamPolicyLambda:
-      Type: "AWS::IAM::Policy"
-      Properties:
-        PolicyName: "${self:custom.stage}-${self:custom.project}"
-        PolicyDocument:
-          Version: "2012-10-17"
-          Statement:
-            -
-              Effect: "Allow"
-              Action:
-                - "logs:CreateLogGroup"
-                - "logs:CreateLogStream"
-                - "logs:PutLogEvents"
-              Resource: "arn:aws:logs:${self:custom.region}:*:*"
-            -
-              Effect: "Allow"
-              Action:
-                - "*"
-              Resource: "arn:aws:dynamodb:${self:custom.region}:*:table/${self:custom.project}-posts-${self:custom.stage}"
-            -
-              Effect: "Allow"
-              Action:
-                - "*"
-              Resource: "arn:aws:dynamodb:${self:custom.region}:*:table/${self:custom.project}-authors-${self:custom.stage}"
-            -
-              Effect: "Allow"
-              Action:
-                - "*"
-              Resource: "arn:aws:dynamodb:${self:custom.region}:*:table/${self:custom.project}-comments-${self:custom.stage}"
-        Roles:
-          - Ref: "IamRoleLambda"
-    CloudWatchRole:
-      Type: "AWS::IAM::Role"
-      Properties:
-        AssumeRolePolicyDocument:
-          Version: "2012-10-17"
-          Statement:
-            -
-              Effect: "Allow"
-              Principal:
-                Service:
-                  - "apigateway.amazonaws.com"
-              Action: "sts:AssumeRole"
-        Path: "/"
-        ManagedPolicyArns:
-          - "arn:aws:iam::aws:policy/service-role/AmazonAPIGatewayPushToCloudWatchLogs"
-    Account:
-      Type: "AWS::ApiGateway::Account"
-      Properties:
-        CloudWatchRoleArn:
-          Fn::GetAtt:
-            - "CloudWatchRole"
-            - "Arn"
-    PostsDynamo:
-      Type: "AWS::DynamoDB::Table"
+#    IamRoleLambda:
+#      Type: AWS::IAM::Role
+#      Properties:
+#        AssumeRolePolicyDocument:
+#          Version: "2012-10-17"
+#          Statement:
+#            -
+#              Effect: Allow
+#              Principal:
+#                Service:
+#                  - "lambda.amazonaws.com"
+#              Action:
+#                - "sts:AssumeRole"
+#        Path: "/"
+#    IamPolicyLambda:
+#      Type: "AWS::IAM::Policy"
+#      Properties:
+#        PolicyName: "${self:custom.stage}-${self:custom.project}"
+#        PolicyDocument:
+#          Version: "2012-10-17"
+#          Statement:
+#            -
+#              Effect: "Allow"
+#              Action:
+#                - "logs:CreateLogGroup"
+#                - "logs:CreateLogStream"
+#                - "logs:PutLogEvents"
+#              Resource: "arn:aws:logs:${self:custom.region}:*:*"
+#            -
+#              Effect: "Allow"
+#              Action:
+#                - "*"
+#              Resource: "arn:aws:dynamodb:${self:custom.region}:*:table/${self:custom.project}-posts-${self:custom.stage}"
+#            -
+#              Effect: "Allow"
+#              Action:
+#                - "*"
+#              Resource: "arn:aws:dynamodb:${self:custom.region}:*:table/${self:custom.project}-authors-${self:custom.stage}"
+#            -
+#              Effect: "Allow"
+#              Action:
+#                - "*"
+#              Resource: "arn:aws:dynamodb:${self:custom.region}:*:table/${self:custom.project}-comments-${self:custom.stage}"
+#        Roles:
+#          - Ref: "IamRoleLambda"
+#    CloudWatchRole:
+#      Type: "AWS::IAM::Role"
+#      Properties:
+#        AssumeRolePolicyDocument:
+#          Version: "2012-10-17"
+#          Statement:
+#            -
+#              Effect: "Allow"
+#              Principal:
+#                Service:
+#                  - "apigateway.amazonaws.com"
+#              Action: "sts:AssumeRole"
+#        Path: "/"
+#        ManagedPolicyArns:
+#          - "arn:aws:iam::aws:policy/service-role/AmazonAPIGatewayPushToCloudWatchLogs"
+#    Account:
+#      Type: "AWS::ApiGateway::Account"
+#      Properties:
+#        CloudWatchRoleArn:
+#          Fn::GetAtt:
+#            - "CloudWatchRole"
+#            - "Arn"
+#    PostsDynamo:
+#      Type: "AWS::DynamoDB::Table"
 #      DeletionPolicy: "Retain"
-      Properties:
-        AttributeDefinitions:
-          - AttributeName: "id"
-            AttributeType: "S"
-        KeySchema:
-          - AttributeName: "id"
-            KeyType: "HASH"
-        ProvisionedThroughput:
-          ReadCapacityUnits: 1
-          WriteCapacityUnits: 1
-        TableName: "${self:custom.project}-posts-${self:custom.stage}"
-    AuthorsDynamo:
-      Type: "AWS::DynamoDB::Table"
+#      Properties:
+#        AttributeDefinitions:
+#          - AttributeName: "id"
+#            AttributeType: "S"
+#        KeySchema:
+#          - AttributeName: "id"
+#            KeyType: "HASH"
+#        ProvisionedThroughput:
+#          ReadCapacityUnits: 1
+#          WriteCapacityUnits: 1
+#        TableName: "${self:custom.project}-posts-${self:custom.stage}"
+#    AuthorsDynamo:
+#      Type: "AWS::DynamoDB::Table"
 #      DeletionPolicy: "Retain"
-      Properties:
-        AttributeDefinitions:
-          - AttributeName: "id"
-            AttributeType: "S"
-        KeySchema:
-          - AttributeName: "id"
-            KeyType: "HASH"
-        ProvisionedThroughput:
-          ReadCapacityUnits: 1
-          WriteCapacityUnits: 1
-        TableName: "${self:custom.project}-authors-${self:custom.stage}"
-    CommentsDynamo:
-      Type: "AWS::DynamoDB::Table"
+#      Properties:
+#        AttributeDefinitions:
+#          - AttributeName: "id"
+#            AttributeType: "S"
+#        KeySchema:
+#          - AttributeName: "id"
+#            KeyType: "HASH"
+#        ProvisionedThroughput:
+#          ReadCapacityUnits: 1
+#          WriteCapacityUnits: 1
+#        TableName: "${self:custom.project}-authors-${self:custom.stage}"
+#    CommentsDynamo:
+#      Type: "AWS::DynamoDB::Table"
 #      DeletionPolicy: "Retain"
-      Properties:
-        AttributeDefinitions:
-          - AttributeName: "id"
-            AttributeType: "S"
-        KeySchema:
-          - AttributeName: "id"
-            KeyType: "HASH"
-        ProvisionedThroughput:
-          ReadCapacityUnits: 1
-          WriteCapacityUnits: 1
-        TableName: "${self:custom.project}-comments-${self:custom.stage}"
-  Outputs:
-    IamRoleArnLambda:
-      Description: "ARN of the lambda IAM role"
-      Value:
-        Fn::GetAtt:
-          - "IamRoleLambda"
-          - "Arn"
+#      Properties:
+#        AttributeDefinitions:
+#          - AttributeName: "id"
+#            AttributeType: "S"
+#        KeySchema:
+#          - AttributeName: "id"
+#            KeyType: "HASH"
+#        ProvisionedThroughput:
+#          ReadCapacityUnits: 1
+#          WriteCapacityUnits: 1
+#        TableName: "${self:custom.project}-comments-${self:custom.stage}"
+#  Outputs:
+#    IamRoleArnLambda:
+#      Description: "ARN of the lambda IAM role"
+#      Value:
+#        Fn::GetAtt:
+#          - "IamRoleLambda"
+#          - "Arn"
