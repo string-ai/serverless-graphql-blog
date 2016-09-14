@@ -1,0 +1,44 @@
+[
+  {
+    "id": "masoudfaosdifoa",
+    "creditCard": {
+      "cardNumber": "1111-1111-1111-1111",
+      "cardholderName": "FULANO D SILVA",
+      "expiryDate": "01/21",
+      "CCV": "111"
+    },
+    "name": "FULANO D SILVA",
+    "plate": {
+      "id": "1",
+      "plateNumber": "ADF 0045"
+    }
+  },
+  {
+    "id": "poiwquer",
+    "creditCard": {
+      "cardNumber": "2222-2222-2222-2222",
+      "cardholderName": "SICRANO D SOUZA",
+      "expiryDate": "01/22",
+      "CCV": "222"
+    },
+    "name": "SICRANO D SOUZA",
+    "plate": {
+      "id": "2",
+      "plateNumber": "AAA 0000"
+    }
+  },
+  {
+    "id": "zxcvzmn",
+    "creditCard": {
+      "cardNumber": "3333-3333-3333-3333",
+      "cardholderName": "FRANSHELLY APARECIDA",
+      "expiryDate": "01/22",
+      "CCV": "333"
+    },
+    "name": "FRANSHELLY APARECIDA",
+    "plate": {
+      "id": "3",
+      "plateNumber": "BBB 1111"
+    }
+  }
+]
