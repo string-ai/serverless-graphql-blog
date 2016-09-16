@@ -2,51 +2,61 @@
   {
     "id": "1",
     "spot": "045",
+    "address": "Rua Augusta",
     "status": "A"
   },
   {
     "id": "2",
     "spot": "046",
+    "address": "Rua Setembra",
     "status": "O"
   },
   {
     "id": "3",
     "spot": "047",
+    "address": "Rua Outubra",
     "status": "A"
   },
   {
     "id": "4",
     "spot": "048",
+    "address": "Rua Novembra",
     "status": "A"
   },
   {
     "id": "5",
     "spot": "049",
+    "address": "Rua Dezembra",
     "status": "O"
   },
   {
     "id": "6",
     "spot": "050",
+    "address": "Rua Januéria",
     "status": "I"
   },
   {
     "id": "7",
     "spot": "051",
+    "address": "Rua Feveréria",
     "status": "I"
   },
   {
     "id": "8",
     "spot": "052",
+    "address": "Rua Marçal",
     "status": "A"
   },
   {
     "id": "9",
     "spot": "053",
+    "address": "Rua Abrilia",
     "status": "A"
   },
   {
     "id": "10",
     "spot": "054",
+    "address": "Rua Maia",
     "status": "O"
   }
 ]
