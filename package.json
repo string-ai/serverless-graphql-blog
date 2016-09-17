@@ -4,7 +4,8 @@
   "description": "graphql blog",
   "main": "./src/blog/index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "updateSchema": "babel-node ./scripts/updateSchema.js"
   },
   "author": "string-ai",
   "license": "MIT",
@@ -23,6 +24,8 @@
     "babel-plugin-transform-runtime": "^6.15.0",
     "babel-preset-es2015": "^6.14.0",
     "babel-preset-stage-0": "^6.5.0",
+    "babel-relay-plugin": "^0.9.3",
+    "babel-runtime": "^6.11.6",
     "serverless-webpack": "^1.0.0-beta.2.2",
     "webpack": "^1.13.2"
   }

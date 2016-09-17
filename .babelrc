@@ -1,4 +1,13 @@
 {
-  "plugins": ["transform-runtime"],
-  "presets": ["es2015", "stage-0"]
+    "passPerPreset": true,
+    "plugins": ["transform-runtime"],
+    "presets": [
+        {
+            "plugins": [
+                "./plugins/babelRelayPlugin"
+            ]
+        },
+        "es2015",
+        "stage-0"
+    ]
 }
