@@ -9,7 +9,6 @@ var gql = require('./lib');
 
 // Lambda Handler
 export const graphql = (event, context, cb) => {
-    console.log('event:' + JSON.stringify(event));
     return gql(event.body)
         .then((response) => cb(null, response))
         .catch((error) => cb(error));
