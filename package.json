@@ -4,7 +4,10 @@
   "description": "graphql blog",
   "main": "./src/blog/index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
+    "test-compile": "babel lib/__test__ -d build/__test__/",
+    "preunittest": "npm run test-compile",
+    "unittest": "mocha -G --recursive --require build/__test__/setup build/__test__",
+    "test": "npm run unittest",
     "updateSchema": "babel-node ./scripts/updateSchema.js"
   },
   "author": "string-ai",
@@ -12,9 +15,13 @@
   "dependencies": {
     "aws-sdk": "^2.5.5",
     "bluebird": "^3.4.6",
+    "chai": "^3.5.0",
+    "chai-as-promised": "^6.0.0",
     "graphql": "^0.7.0",
     "graphql-relay": "^0.4.3",
     "json-loader": "^0.5.4",
+    "mocha": "^3.1.0",
+    "moment": "^2.15.1",
     "ramda": "^0.22.1",
     "serverless-helpers-js": "^0.2.0"
   },
@@ -26,6 +33,7 @@
     "babel-preset-stage-0": "^6.5.0",
     "babel-relay-plugin": "^0.9.3",
     "babel-runtime": "^6.11.6",
+    "graphql-tester": "0.0.4",
     "serverless-webpack": "^1.0.0-beta.2.2",
     "webpack": "^1.13.2"
   }
